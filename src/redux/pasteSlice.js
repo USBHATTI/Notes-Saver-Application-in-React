@@ -36,13 +36,14 @@ export const pasteSlice = createSlice({
       }
       
     },
-    removeFromPastes: (state, action) =>{
+    resetAllPastes: (state, action) =>{
       state.pastes = [];
       localStorage.removeItem("pastes");
 
         
     },
-    resetAllPastes: (state, action) =>{
+    
+    removeFromPastes: (state, action) =>{
       const pasteId = action.payload;
       console.log("Resetting all pastes", pasteId);
       const index = state.pastes.findIndex((p) => p._id === pasteId);

@@ -1,5 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { removeFromPastes, resetAllPastes } from '../redux/pasteSlice';
+import toast from 'react-hot-toast';
 
 const Paste = () => {
     const pastes = useSelector((state) => state.paste.pastes);
@@ -7,6 +9,10 @@ const Paste = () => {
     const [searchTerm, setSearchTerm] = React.useState("");
     const dispatch = useDispatch();
     const filteredData = pastes.filter((paste) => paste.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    function handleDelete(pasteId){
+        dispatch(removeFromPastes(pasteId));
+    }
   return (
     <div>
         <input 
@@ -25,10 +31,18 @@ const Paste = () => {
                             <h3 className='text-white font-bold mb-2'>{paste.title}</h3>
                             <p className='text-gray-300 text-sm mb-3'>{paste.content}</p>
                             <div className='flex flex-row place-content-evenly'>
-                                <button>Edit</button>
-                            <button>View</button>
-                            <button>Delete</button>
-                            <button>Copy</button>
+                            <button>
+                                <a href={`/?pasteId=${paste?._id}`}>Edit</a>
+                                </button>
+                            <button > 
+                                <a href={`/pastes/${paste?._id}`}> View </a>
+                            </button>
+                            <button onClick={()=> handleDelete(paste._id)}>Delete</button>
+                            <button onClick={()=> {
+                                navigator.clipboard.writeText
+                                (paste?.content)
+                                toast.success("copied")
+                            }}>Copy</button>
                             <button>Share</button>
                             </div>
                             <p className='text-gray-500 text-xs'>{new Date(paste.createdAt).toLocaleDateString()}</p>

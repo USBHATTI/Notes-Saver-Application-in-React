@@ -5,7 +5,7 @@ import Paste from './components/Paste.jsx'
 import ViewPaste from './components/ViewPaste.jsx'
 
 const RootLayout = () => (
-  <div className='flex flex-col items-center justify-center min-h-screen w-full'>
+  <div className='flex flex-col items-center min-h-screen w-full'>
     <Navbar />
     <Outlet />
   </div>
